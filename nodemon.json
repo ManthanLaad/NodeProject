@@ -1,0 +1,8 @@
+{
+  "watch": ["src/**/*.js"],
+  "ignore": ["sessions/**", "node_modules/**"],
+  "ext": "js",
+  "delay": 2000,
+  "verbose": false,
+  "exec": "node src/server.js"
+}
