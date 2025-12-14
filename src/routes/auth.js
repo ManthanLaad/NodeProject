@@ -135,7 +135,7 @@ router.get("/callback", async (req, res) => {
 
     // Initialize MCP connection with the new tokens
     console.log("Initializing MCP connection...", { tokens, expiresAt })
-    await mcpService.initializeMCPConnection(
+    const { tools } = await mcpService.initializeMCPConnection(
       req.session.id,
       {
         accountId: tokens.accountId,
@@ -149,17 +149,18 @@ router.get("/callback", async (req, res) => {
     console.log("OAuth flow completed successfully")
 
     // Send HTML that closes popup and notifies parent window
-    res.send(`
-            <html>
-                <body>
-                    <script>
-                        window.opener.postMessage({ type: 'oauth_success' }, '*');
-                        window.close();
-                    </script>
-                    <p>Authorization successful! This window should close automatically.</p>
-                </body>
-            </html>
-        `)
+    res.send(tools)
+    // res.send(`
+    //         <html>
+    //             <body>
+    //                 <script>
+    //                     window.opener.postMessage({ type: 'oauth_success' }, '*');
+    //                     window.close();
+    //                 </script>
+    //                 <p>Authorization successful! This window should close automatically.</p>
+    //             </body>
+    //         </html>
+    //     `)
   } catch (error) {
     console.error("OAuth callback error:", error)
     res.send(`
